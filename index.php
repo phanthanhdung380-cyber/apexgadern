@@ -123,6 +123,16 @@ $csrfToken = $_SESSION["csrf_token"];
 
 
 <head>
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GPQ6QRGB95"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GPQ6QRGB95');
+</script>
  <title><?php echo h($siteName); ?></title>
   <meta name="description" content="Apex Gardening Tools — home gardening tools manufacturer." />
   <style>
@@ -703,6 +713,7 @@ $csrfToken = $_SESSION["csrf_token"];
   </script>
 </body>
 </html>
+
 
 
 
