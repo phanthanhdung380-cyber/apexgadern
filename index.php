@@ -3,6 +3,9 @@ echo "<!-- PHP_EXECUTED_AT: " . date("Y-m-d H:i:s") . " -->";
 ?>
 
 <?php
+echo "Server PHP version: " . PHP_VERSION;
+?>
+<?php
 // index.php — Single-page PHP site with contact form (texts only)
 
 // -------------------------
@@ -707,6 +710,7 @@ $csrfToken = $_SESSION["csrf_token"];
   </script>
 </body>
 </html>
+
 
 
 
