@@ -22,11 +22,15 @@ if (!empty($_SERVER['HTTP_X_REAL_IP']) && $validIp($_SERVER['HTTP_X_REAL_IP'])) 
     $realIp = $_SERVER['HTTP_X_REAL_IP'];
 }
 
-/**
- * 2) Cloudflare header (best when present).
- */
-elseif (!empty($_SERVER['HTTP_CF_CONNECTING_IP']) && $validIp($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-    $realIp = $_SERVER['HTTP_CF_CONNECTING_IP'];
+// 2) Overwrite common IP fields so any script (even if it reads the "wrong" header) gets the real IP.
+if ($realIp) {
+    $_SERVER['REMOTE_ADDR'] = $realIp;
+
+    // Force common proxy headers to the same real IP (prevents "wrong header" parsers from using CF edge IP)
+    $_SERVER['HTTP_X_FORWARDED_FOR']  = $realIp;
+    $_SERVER['HTTP_X_REAL_IP']        = $realIp;
+    $_SERVER['HTTP_TRUE_CLIENT_IP']   = $realIp;
+    $_SERVER['HTTP_CF_CONNECTING_IP'] = $realIp;
 }
 
 /**
@@ -56,3 +60,4 @@ if ($realIp) {
     // OPTIONAL but useful: Adspect extracts the LAST IP from XFF, so normalize it to a single IP.
     $_SERVER['HTTP_X_FORWARDED_FOR'] = $realIp;
 }
+
