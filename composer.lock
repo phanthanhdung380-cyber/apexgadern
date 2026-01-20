@@ -1,0 +1,19 @@
+{
+  "_readme": [
+    "This lock file is intentionally minimal. It exists only to satisfy the PHP buildpack.",
+    "No PHP packages are required for this site."
+  ],
+  "content-hash": "00000000000000000000000000000000",
+  "packages": [],
+  "packages-dev": [],
+  "aliases": [],
+  "minimum-stability": "stable",
+  "stability-flags": [],
+  "prefer-stable": true,
+  "prefer-lowest": false,
+  "platform": {
+    "php": ">=8.0"
+  },
+  "platform-dev": [],
+  "plugin-api-version": "2.2.0"
+}
