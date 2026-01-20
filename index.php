@@ -1,16 +1,5 @@
-  <!-- Histats.com  START  (aync)-->
-<script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,5003857,4,0,0,0,00010000']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5003857&101" alt="counter easy hit" border="0"></a></noscript>
-<!-- Histats.com  END  -->
 <?php
+require_once __DIR__ . '/bootstrap.php';
 // index.php — Single-page PHP site with contact form (texts only)
 
 // -------------------------
@@ -43,7 +32,6 @@ $success = false;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["contact_form"])) {
   // Basic CSRF token check
-  session_start();
   $sessionToken = $_SESSION["csrf_token"] ?? "";
   $postedToken  = $_POST["csrf_token"] ?? "";
   if (!$sessionToken || !hash_equals($sessionToken, $postedToken)) {
@@ -118,9 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["contact_form"])) {
       $errors[] = "Your message was saved, but email delivery is not configured on this server. Please call us or email directly.";
     }
   }
-} else {
-  // Create CSRF token for GET requests
-  session_start();
 }
 
 // Ensure CSRF token exists
@@ -725,6 +710,7 @@ $csrfToken = $_SESSION["csrf_token"];
   </script>
 </body>
 </html>
+
 
 
 
