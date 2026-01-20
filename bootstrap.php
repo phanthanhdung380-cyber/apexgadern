@@ -1,5 +1,6 @@
 <?php
 // bootstrap.php
+// Purpose: Detect real client IP behind proxies (Cloudflare + DO App Platform) and start session early.
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
@@ -7,25 +8,51 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 $realIp = null;
 
-// 1. Cloudflare (best)
-if (!empty($_SERVER['HTTP_CF_CONNECTING_IP']) && filter_var($_SERVER['HTTP_CF_CONNECTING_IP'], FILTER_VALIDATE_IP)) {
-    $realIp = $_SERVER['HTTP_CF_CONNECTING_IP'];
-}
+/**
+ * Helper: validate IP
+ */
+$validIp = function ($ip) {
+    return is_string($ip) && $ip !== '' && filter_var($ip, FILTER_VALIDATE_IP);
+};
 
-// 2. DigitalOcean App Platform
-elseif (!empty($_SERVER['HTTP_X_REAL_IP']) && filter_var($_SERVER['HTTP_X_REAL_IP'], FILTER_VALIDATE_IP)) {
+/**
+ * 1) DigitalOcean App Platform often provides the real IP here (more reliable than XFF).
+ */
+if (!empty($_SERVER['HTTP_X_REAL_IP']) && $validIp($_SERVER['HTTP_X_REAL_IP'])) {
     $realIp = $_SERVER['HTTP_X_REAL_IP'];
 }
 
-// 3. Standard proxy chain
+/**
+ * 2) Cloudflare header (best when present).
+ */
+elseif (!empty($_SERVER['HTTP_CF_CONNECTING_IP']) && $validIp($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+    $realIp = $_SERVER['HTTP_CF_CONNECTING_IP'];
+}
+
+/**
+ * 3) Fallback to X-Forwarded-For FIRST IP (the visitor) if present.
+ * Note: this can be spoofed if you are not behind a trusted proxy, but on App Platform it’s typically safe.
+ */
 elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $xff = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-    $xffFirst = trim($xff[0]);
-    if (filter_var($xffFirst, FILTER_VALIDATE_IP)) {
-        $realIp = $xffFirst;
+    $parts = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+    $first = trim($parts[0] ?? '');
+    if ($validIp($first)) {
+        $realIp = $first;
     }
 }
 
 if ($realIp) {
+    // Make ALL common server vars consistent so downstream scripts (Adspect) read the right IP.
     $_SERVER['REMOTE_ADDR'] = $realIp;
+
+    // Adspect checks these first — set them so it never falls back to the wrong XFF parsing.
+    $_SERVER['HTTP_CF_CONNECTING_IP'] = $realIp;
+    $_SERVER['HTTP_TRUE_CLIENT_IP']  = $realIp;
+
+    // Keep these aligned too
+    $_SERVER['HTTP_X_REAL_IP'] = $realIp;
+    $_SERVER['HTTP_REAL_IP']   = $realIp;
+
+    // OPTIONAL but useful: Adspect extracts the LAST IP from XFF, so normalize it to a single IP.
+    $_SERVER['HTTP_X_FORWARDED_FOR'] = $realIp;
 }
